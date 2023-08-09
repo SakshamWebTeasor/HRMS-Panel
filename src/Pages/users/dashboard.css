@@ -1,0 +1,45 @@
+.box-dashboard {
+  padding: 2.4rem 1.4rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px 0px rgba(62, 73, 84, 0.1);
+  background: #fff;
+}
+.box-dashboard svg {
+  width: 30px;
+  height: 30px;
+}
+.chart {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0px 4px 10px 0px rgba(62, 73, 84, 0.1);
+}
+.timezone {
+  padding: 1rem;
+  background: #fff;
+  text-align: left;
+  box-shadow: 0px 4px 10px 0px rgba(62, 73, 84, 0.1);
+  border-radius: 10px;
+}
+.timezone p {
+  font-size: 22px;
+  font-weight: 600;
+  color: #555;
+}
+.timezone span {
+  font-size: 22px;
+  font-weight: 600;
+  color: #555;
+}
+.timezone small {
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+}
+.timezone button {
+  margin: 1rem 0;
+  width: 100%;
+}
+.date-section {
+  font-size: 14px !important;
+}

@@ -1,0 +1,10 @@
+.loader {
+	position: absolute;
+	right: 0;
+	left: 0;
+	text-align: center;
+	top: 40%;
+}
+.loader img {
+	width: 150px;
+}

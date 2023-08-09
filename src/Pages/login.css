@@ -1,0 +1,29 @@
+.login {
+	padding: 2rem;
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 0 15px rgba(104, 104, 104, 0.12);
+	margin-top: 2rem;
+	position: relative;
+	top: 0px;
+}
+.login-page img {
+	margin: 0 auto;
+	display: table;
+}
+.login-page {
+    margin-top: 0;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 22%;
+}
+@media(max-width:768px){
+	.login-page {
+		margin-top: 0;
+		position: absolute;
+		right: 0;
+		left: 0;
+		top: 13%;
+	}
+}

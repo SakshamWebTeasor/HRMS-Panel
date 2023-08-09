@@ -1,0 +1,108 @@
+.sidebar {
+  padding: 0rem 0rem 3rem;
+  background: #242939;
+  position: fixed;
+  top: 63px;
+  left: 0;
+  bottom: 0;
+  z-index: 996;
+  transition: all 0.3s;
+  /*overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #fff transparent;
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);*/
+  width: 16vw;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar ul li {
+  padding: 0.6rem 0;
+}
+.sidebar ul li:hover {
+  background: #f0f2f8;
+  color: #ee3141;
+}
+.sidebar ul li:hover.active {
+  background: #fff;
+}
+.sidebar ul li a {
+  color: #54667a;
+  text-decoration: none;
+  font-size: 18px;
+}
+.sidebar ul li {
+  padding: 1rem 2rem;
+  border-radius: 0;
+  margin: 2px 0;
+  position: relative;
+}
+.sidebar ul li.active {
+  background: #f0f2f8;
+  color: #dc3545;
+}
+.sidebar ul li.active a {
+  color: #fff;
+}
+.sidebar ul li:hover a {
+  color: #fff;
+}
+.sidebar ul li.active:hover a {
+  color: #fff;
+}
+.sidebar ul a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 600;
+}
+span.counter-box {
+  width: 25px;
+  height: 25px;
+  background: red;
+  display: block;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 1.7;
+  font-size: 14px;
+  position: absolute;
+  right: 20px;
+  color: #fff;
+  top: 16px;
+}
+@media (max-width: 1800px) {
+  .sidebar {
+    overflow-y: scroll;
+  }
+}
+@media (max-width: 1300px) {
+  .sidebar ul a {
+    font-size: 14px;
+  }
+  .sidebar {
+    width: 17vw;
+  }
+}
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 22vw;
+  }
+  .box-dashboard {
+    padding: 1.4rem 0.9rem;
+  }
+  .box-dash a h5 {
+    font-size: 16px;
+  }
+  .box-dash h5 {
+    font-size: 16px;
+  }
+  .box-dash h3 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 992px) {
+  .box-dashboard {
+    margin-bottom: 1rem;
+  }
+}

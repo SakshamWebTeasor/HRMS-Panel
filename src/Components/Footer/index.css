@@ -1,0 +1,15 @@
+.footer-text h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+.footer {
+  background: #242939;
+  padding: 1.3rem;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+}

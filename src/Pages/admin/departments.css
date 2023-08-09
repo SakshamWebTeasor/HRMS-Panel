@@ -1,0 +1,7 @@
+.responsive .table > thead {
+	vertical-align: bottom;
+	background: #b0202c;
+}
+.responsive .table > tbody {
+	vertical-align: middle;
+}

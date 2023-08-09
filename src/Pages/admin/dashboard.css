@@ -1,0 +1,28 @@
+.box-dashboard {
+  padding: 2.4rem 1.4rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px 0px rgba(62, 73, 84, 0.1);
+  background: #fff;
+  margin-bottom: 30px;
+}
+.box-dashboard svg {
+  width: 30px;
+  height: 30px;
+}
+.chart {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0px 4px 10px 0px rgba(62, 73, 84, 0.1);
+}
+.box-dash a {
+  text-decoration: none;
+}
+
+.box-dash h5:hover {
+  color: #dc3545 !important;
+}
+
+.rd {
+  color: #dc3545;
+}
