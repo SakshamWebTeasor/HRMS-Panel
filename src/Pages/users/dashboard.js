@@ -23,6 +23,7 @@ function Dashboard(props) {
   const notify = props.notify;
 
   const data = useSelector((status) => status.userDashboard);
+  console.log("data:",data)
 
   const getData = async () => {
     let option = {
@@ -181,9 +182,10 @@ function Dashboard(props) {
               />
               <div className="ms-2">
                 <h5 className="mb-0">
-                  <h1 style={{ color: "red" }}>{props.current_user.name}</h1> Logged in through:{deviceOS}
+                  <h1 style={{ color: "red" }}>{props.current_user.name}</h1> 
+                  Logged in through:{deviceOS}
                 </h5>
-                <p className="text-muted mb-0">{props.current_user.email}</p>
+                {/* <p className="text-muted mb-0">{props.current_user.email}</p> */}
               </div>
             </div>
           </div>
@@ -282,7 +284,7 @@ function Dashboard(props) {
           </div>
         </div>
         <div className="col-lg-3 col-12">
-          <div className="timezone mt-md-4 mt-0">
+          {deviceOS=="Windows" && <div className="timezone mt-md-4 mt-0">
             <div className="mb-0">
               <span className="date-section">
                 Today: {date.toString().slice(0, 15)}
@@ -340,7 +342,7 @@ function Dashboard(props) {
               )}
               <small>Policy: Normal Attendance Policy </small>
             </div>
-          </div>
+          </div>}
           {/* <div className="timezone mt-md-4 mt-0">
             <h5>
               Holiday <small>Current Month</small>

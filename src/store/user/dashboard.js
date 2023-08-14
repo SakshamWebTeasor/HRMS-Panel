@@ -129,6 +129,7 @@ const userDashboardSlice = createSlice({
       return { ...state };
     });
     builder.addCase(getAll.fulfilled, (state, action) => {
+      console.log("action.payload:",action.payload)
       if (action.payload)
         return {
           ...state,

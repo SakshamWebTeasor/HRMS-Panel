@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  AiOutlineHome, 
+  AiOutlineHome,
   AiOutlineApartment,
   AiOutlineAim,
 } from "react-icons/ai";
@@ -21,12 +21,14 @@ import {
 import { GoClippy } from "react-icons/go";
 import { FcLeave } from "react-icons/fc";
 import "./index.css";
+import { maintainlog } from "../../helper/createLogsApi";
+import { useSelector } from "react-redux";
 
 function Sidebar(props) {
   const socket = props.socket
-  const location = useLocation();
-
+  const location = useLocation()
   const [isActive, setIsActive] = useState(location.pathname);
+  const data = useSelector((status) => status.auth);
   //..... set active when router change.....//
   useEffect(() => {
     setIsActive(location.pathname);
@@ -35,28 +37,28 @@ function Sidebar(props) {
   useEffect(() => {
     const url =
       window.location.href.split("/")[
-        window.location.href.split("/").length - 1
+      window.location.href.split("/").length - 1
       ];
     setIsActive(`/${url}`);
   }, []);
 
   //.. when click on announcement and policy 
-  const clickOnPolicy = ()=>{
+  const clickOnPolicy = () => {
     setIsActive("/policy")
-    socket.emit('clean-notice', {status:'policy'})
+    socket.emit('clean-notice', { status: 'policy' })
     props.setPolicy_New_notice(false)
   }
-  const clickOnAnnouncement = ()=>{
+  const clickOnAnnouncement = () => {
     setIsActive("/announcement")
-    socket.emit('clean-notice', {status:'announcement'})
+    socket.emit('clean-notice', { status: 'announcement' })
     props.setAnnouncement_New_notice(false)
   }
-  const clickOnleave = () =>{
+  const clickOnleave = () => {
     setIsActive("/leave-request")
-    socket.emit('clean-notice', {status:'leave'})
+    socket.emit('clean-notice', { status: 'leave' })
     props.setLeave_new_notice(false)
   }
-  useEffect(()=>{
+  useEffect(() => {
     socket.emit('check_notice')
     socket.emit('check_notice_admin')
   })
@@ -199,7 +201,11 @@ function Sidebar(props) {
               <Link to="/">
                 <li
                   className={isActive === "/" ? "active" : ""}
-                  onClick={() => setIsActive("/")}
+                  onClick={() => {
+                    console.log('logs here')
+                    maintainlog("", data.jwt)
+                    setIsActive("/")
+                  }}
                 >
                   <AiOutlineHome />
                   <span className="ms-2">Home</span>
@@ -208,7 +214,11 @@ function Sidebar(props) {
               <Link to="/attendance">
                 <li
                   className={isActive === "/attendance" ? "active" : ""}
-                  onClick={() => setIsActive("/attendance")}
+                  onClick={() => {
+                    console.log('logs here')
+                    maintainlog("attendance", data.jwt)
+                    setIsActive("/attendance")
+                  }}
                 >
                   <MdOutlineFormatTextdirectionLToR />
                   <span className="ms-2">Attendance</span>
@@ -217,7 +227,11 @@ function Sidebar(props) {
               <Link to="/leave">
                 <li
                   className={isActive === "/leave" ? "active" : ""}
-                  onClick={() => setIsActive("/leave")}
+                  onClick={() => {
+                    console.log('logs here')
+                    maintainlog("leave", data.jwt)
+                    setIsActive("/leave")
+                  }}
                 >
                   <GoClippy />
                   <span className="ms-2">Leave</span>
@@ -226,7 +240,11 @@ function Sidebar(props) {
               <Link to="/salary">
                 <li
                   className={isActive === "/salary" ? "active" : ""}
-                  onClick={() => setIsActive("/salary")}
+                  onClick={() => {
+                    console.log('logs here')
+                    maintainlog("salary", data.jwt)
+                    setIsActive("/salary")
+                  }}
                 >
                   <HiOutlineCurrencyRupee />
                   <span className="ms-2">Salary</span>
@@ -255,7 +273,10 @@ function Sidebar(props) {
               <Link to="/holiday">
                 <li
                   className={isActive === "/holiday" ? "active" : ""}
-                  onClick={() => setIsActive("/holiday")}
+                  onClick={async () => {
+                    maintainlog("holiday", data.jwt)
+                    setIsActive("/holiday")
+                  }}
                 >
                   <MdOutlineHolidayVillage />
                   <span className="ms-2">Holiday</span>
