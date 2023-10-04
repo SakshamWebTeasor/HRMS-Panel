@@ -102,6 +102,7 @@ const userDashboardSlice = createSlice({
   },
   reducers: {
     setIsSubmitting(state, action){
+      console.log('in setIsSubmit for dashboard')
       if(action)
         return {...state,isSubmitting:true }
       return {...state, isSubmitting:false}

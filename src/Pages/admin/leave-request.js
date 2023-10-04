@@ -165,7 +165,7 @@ function LeaveRequest(props) {
                         <Link to={"/leave-request/" + result.users._id}>
                           <div className="d-flex">
                             <img
-                              src={User}
+                              src={result.userImage}
                               alt="User"
                               className="img-fluid rounded-circle"
                               style={{ width: "40px", height: "40px" }}

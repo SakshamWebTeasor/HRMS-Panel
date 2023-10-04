@@ -50,7 +50,7 @@ body {
 }
 .responsive .table > thead {
   vertical-align: bottom;
-  background: #ee3141;
+  background: #ee3141 !important;
 }
 .responsive .table > tbody {
   vertical-align: middle;
@@ -156,4 +156,8 @@ body {
   .btn {
     font-size: 14px;
   }
+}
+
+.text-white{
+  color: #9D2B34 !important;
 }

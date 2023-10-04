@@ -36,7 +36,7 @@ import { GoClippy } from "react-icons/go";
 import { FcLeave } from "react-icons/fc";
 
 import Logo from "../../assets/images/logo.png";
-import User from "../../assets/images/user.jpg";
+import User from "../../assets/images/wt2.png";
 import "./index.css";
 import TitleCase from "../../helper/title-case";
 //import { BsFillBellFill } from "react-icons/bs";

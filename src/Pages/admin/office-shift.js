@@ -10,7 +10,7 @@ import {
 import "./designation.css";
 import { Spinner, Modal, Table, Button, Form } from "react-bootstrap";
 import TitleCase from "../../helper/title-case";
-import LocalTimeZone,{ LocaDateFormate } from "../../helper/time-set-localtimezone";
+import LocalTimeZone, { LocaDateFormate } from "../../helper/time-set-localtimezone";
 
 function OfficeShift(props) {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function OfficeShift(props) {
     end.setHours(parseInt(y[0]))
     end.setMinutes(parseInt(y[1]))
     end.setSeconds(0);
-    
+
     dispatch(
       addRecord({
         jwt,
@@ -121,16 +121,16 @@ function OfficeShift(props) {
                     ref={shiftRef}
                     required
                   />
-                    
+
                   <span className="text-danger">
                     {data.errors.length > 0
                       ? data.errors.map((err) =>
-                          err.param === "shift" ? (
-                            <TitleCase key="err-1" text={err.msg} />
-                          ) : (
-                            ""
-                          )
+                        err.param === "shift" ? (
+                          <TitleCase key="err-1" text={err.msg} />
+                        ) : (
+                          ""
                         )
+                      )
                       : ""}
                   </span>
                 </Form.Group>
@@ -150,12 +150,12 @@ function OfficeShift(props) {
                   <span className="text-danger">
                     {data.errors.length > 0
                       ? data.errors.map((err) =>
-                          err.param === "time_in" ? (
-                            <TitleCase key="err-2" text={err.msg} />
-                          ) : (
-                            ""
-                          )
+                        err.param === "time_in" ? (
+                          <TitleCase key="err-2" text={err.msg} />
+                        ) : (
+                          ""
                         )
+                      )
                       : ""}
                   </span>
                   <p className="pt-2">To</p>
@@ -168,12 +168,12 @@ function OfficeShift(props) {
                   <span className="text-danger">
                     {data.errors.length > 0
                       ? data.errors.map((err) =>
-                          err.param === "time_out" ? (
-                            <TitleCase key="err-3" text={err.msg} />
-                          ) : (
-                            ""
-                          )
+                        err.param === "time_out" ? (
+                          <TitleCase key="err-3" text={err.msg} />
+                        ) : (
+                          ""
                         )
+                      )
                       : ""}
                   </span>
                 </Form.Group>
@@ -193,12 +193,12 @@ function OfficeShift(props) {
                   <span className="text-danger">
                     {data.errors.length > 0
                       ? data.errors.map((err) =>
-                          err.param === "lunch_time" ? (
-                            <TitleCase key="err-4" text={err.msg} />
-                          ) : (
-                            ""
-                          )
+                        err.param === "lunch_time" ? (
+                          <TitleCase key="err-4" text={err.msg} />
+                        ) : (
+                          ""
                         )
+                      )
                       : ""}
                   </span>
                 </Form.Group>
@@ -251,61 +251,63 @@ function OfficeShift(props) {
                     ) : data.allData.length > 0 ? (
                       data.allData.map((result, index) => {
                         return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <TitleCase text={result.shift} />
-                          </td>
-                          <td>
-                            <LocalTimeZone time = {result.time_in}/>
-                            &#10240;-&#10240;
-                            <LocalTimeZone time = {result.time_out}/>
-                          </td>
-                          <td>{result.lunch_time}</td>
-                          <td><LocaDateFormate date_arg = {result.created_at}/></td>
-                          <td>
-                            <p
-                              className={
-                                result.active ? "text-success" : "text-danger"
-                              }
-                            >
-                              {result.active ? "Active" : "Block"}
-                            </p>
-                          </td>
-                          <td className="d-flex align-items-center">
-                            <Button
-                              onClick={() => {
-                                handleShow(result._id);
-                              }}
-                              className="btn btn-warning text-white"
-                            >
-                              Edit
-                            </Button>
-                            {!result.is_deleted && (
-                              <Button
-                                onClick={() =>
-                                  dispatch(
-                                    updateStatus({
-                                      jwt,
-                                      id: result._id,
-                                      active: !result.active,
-                                      index,
-                                    })
-                                  )
-                                }
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>
+                              <TitleCase text={result.shift} />
+                            </td>
+                            <td>
+                              <LocalTimeZone time={result.time_in} />
+                              &#10240;-&#10240;
+                              <LocalTimeZone time={result.time_out} />
+                            </td>
+                            <td>{result.lunch_time}</td>
+                            <td><LocaDateFormate date_arg={result.created_at} /></td>
+                            <td>
+                              <p
                                 className={
-                                  !result.active
-                                    ? "btn btn-primary text-white ms-2"
-                                    : "btn btn-danger text-white ms-2"
+                                  result.active ? "text-success" : "text-danger"
                                 }
-                                variant={!result.active ? "primary" : "danger"}
                               >
-                                {!result.active ? "Active" : "Block"}
+                                {result.active ? "Active" : "Block"}
+                              </p>
+                            </td>
+                            <td className="d-flex align-items-center">
+                              <Button
+                                onClick={() => {
+                                  handleShow(result._id);
+                                }}
+                                className="btn btn-warning text-white"
+                              >
+                                Edit
                               </Button>
-                            )}
-                          </td>
-                        </tr>
-                      )})
+                              {!result.is_deleted && (
+                                <Button
+                                  onClick={() =>
+                                    dispatch(
+                                      updateStatus({
+                                        jwt,
+                                        id: result._id,
+                                        active: !result.active,
+                                        data: result,
+                                        index,
+                                      })
+                                    )
+                                  }
+                                  className={
+                                    !result.active
+                                      ? "btn btn-primary text-white ms-2"
+                                      : "btn btn-danger text-white ms-2"
+                                  }
+                                  variant={!result.active ? "primary" : "danger"}
+                                >
+                                  {!result.active ? "Active" : "Block"}
+                                </Button>
+                              )}
+                            </td>
+                          </tr>
+                        )
+                      })
                     ) : (
                       <tr key={0}>
                         <td colSpan={8} className="text-center">
@@ -331,25 +333,25 @@ function OfficeShift(props) {
                 Shift <span className="text-danger">*</span>{" "}
               </Form.Label>
               <Form.Control
-                    type="text"
-                    aria-label="Default select example"
-                    placeholder="Shift Name"
+                type="text"
+                aria-label="Default select example"
+                placeholder="Shift Name"
                 ref={editShiftRef}
                 defaultValue={
                   data.singledata.length > 0 ? data.singledata[0].shift : ""
                 }
                 required
               />
-               
+
               <span className="text-danger">
                 {data.editErrors.length > 0
                   ? data.editErrors.map((err) =>
-                      err.param === "shift" ? (
-                        <TitleCase key="editerr-1" text={err.msg} />
-                      ) : (
-                        ""
-                      )
+                    err.param === "shift" ? (
+                      <TitleCase key="editerr-1" text={err.msg} />
+                    ) : (
+                      ""
                     )
+                  )
                   : ""}
               </span>
             </Form.Group>
@@ -361,7 +363,7 @@ function OfficeShift(props) {
                 type="time"
                 ref={editStartRef}
                 defaultValue={
-                  data.singledata.length > 0 ? LocalTimeZone({time: data.singledata[0].time_in}) : ""
+                  data.singledata.length > 0 ? LocalTimeZone({ time: data.singledata[0].time_in }) : ""
                 }
                 placeholder="Name"
                 required
@@ -369,12 +371,12 @@ function OfficeShift(props) {
               <span className="text-danger">
                 {data.editErrors.length > 0
                   ? data.editErrors.map((err) =>
-                      err.param === "time_in" ? (
-                        <TitleCase key="editerr-2" text={err.msg} />
-                      ) : (
-                        ""
-                      )
+                    err.param === "time_in" ? (
+                      <TitleCase key="editerr-2" text={err.msg} />
+                    ) : (
+                      ""
                     )
+                  )
                   : ""}
               </span>
               <p className="pt-2">To</p>
@@ -382,7 +384,7 @@ function OfficeShift(props) {
                 type="time"
                 ref={editEndRef}
                 defaultValue={
-                  data.singledata.length > 0 ? LocalTimeZone({time: data.singledata[0].time_out}) : ""
+                  data.singledata.length > 0 ? LocalTimeZone({ time: data.singledata[0].time_out }) : ""
                 }
                 placeholder="Name"
                 required
@@ -390,12 +392,12 @@ function OfficeShift(props) {
               <span className="text-danger">
                 {data.editErrors.length > 0
                   ? data.editErrors.map((err) =>
-                      err.param === "time_out" ? (
-                        <TitleCase key="editerr-3" text={err.msg} />
-                      ) : (
-                        ""
-                      )
+                    err.param === "time_out" ? (
+                      <TitleCase key="editerr-3" text={err.msg} />
+                    ) : (
+                      ""
                     )
+                  )
                   : ""}
               </span>
             </Form.Group>
@@ -417,12 +419,12 @@ function OfficeShift(props) {
               <span className="text-danger">
                 {data.editErrors.length > 0
                   ? data.editErrors.map((err) =>
-                      err.param === "lunch_time" ? (
-                        <TitleCase key="editerr-4" text={err.msg} />
-                      ) : (
-                        ""
-                      )
+                    err.param === "lunch_time" ? (
+                      <TitleCase key="editerr-4" text={err.msg} />
+                    ) : (
+                      ""
                     )
+                  )
                   : ""}
               </span>
             </Form.Group>

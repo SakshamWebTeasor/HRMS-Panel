@@ -149,7 +149,8 @@ function Sidebar(props) {
                   <span className="ms-2">Office Shift</span>
                 </li>
               </Link>
-              <Link to="/payroll">
+              {/* Payroll Commented  */}
+              {/* <Link to="/payroll">
                 <li
                   className={isActive === "/payroll" ? "active" : ""}
                   onClick={() => setIsActive("/payroll")}
@@ -157,7 +158,7 @@ function Sidebar(props) {
                   <HiOutlineCurrencyRupee />
                   <span className="ms-2">Payroll</span>
                 </li>
-              </Link>
+              </Link> */}
               <Link to="/leave-request">
                 <li
                   className={isActive === "/leave-request" ? "active" : ""}

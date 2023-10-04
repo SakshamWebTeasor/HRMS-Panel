@@ -1,5 +1,5 @@
 export async function maintainlog(path, jwt) {
-    const response = await (await fetch(`http://localhost:8000/api/user/logs/${path}`, {
+    const response = await (await fetch(`https://52.65.168.252:8000/api/user/logs/${path}`, { //https://52.65.168.252:8000/
         method: 'GET',
         headers: {
             'Content-Type':'application/json',

@@ -10,6 +10,7 @@ import Chart from "react-apexcharts";
 import Loader from "../../Components/loader";
 import { Spinner } from "react-bootstrap";
 import Watch, { CalculateRealTimePresence } from "../../helper/watch";
+const env = require('../../env.json');
 
 
 
@@ -23,7 +24,7 @@ function Dashboard(props) {
   const notify = props.notify;
 
   const data = useSelector((status) => status.userDashboard);
-  console.log("data:",data)
+  console.log("data:", data)
 
   const getData = async () => {
     let option = {
@@ -43,6 +44,8 @@ function Dashboard(props) {
       return "iOS";
     } else if (userAgent.includes("windows")) {
       return "Windows";
+    } else if (userAgent.includes("linux")) {
+      return "Linux";
     } else {
       return "Unknown";
     }
@@ -75,24 +78,51 @@ function Dashboard(props) {
 
   //......make Attendance....//
   const hendelAttendence = debounce(() => {
+    console.log('in hendelAttendence')
     dispatch(setIsSubmitting(true))
+    console.log('post dispatch setIsSubmitting(1)')
     if (!navigator.geolocation) {
+      console.log('geolocation not found')
       notify("Geolocation is not supported by your browser", true);
       dispatch(setIsSubmitting(false))
     } else {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(
-          makeAttendence({
-            jwt,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            type:
-              !data.todayAttendance.outTime && !data.todayAttendance.inTime
-                ? "check_in"
-                : "check_out",
-          })
-        );
-      });
+      console.log('geolocation found & hit api1')
+      //84a9abc4058a42cd8bf5622a7255352e
+      fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${env.APi_Key}`)
+        .then(response => response.json())
+        .then(ipData => {
+          const { latitude, longitude } = ipData;
+          dispatch(
+            makeAttendence({
+              jwt,
+              latitude,
+              longitude,
+              type:
+                !data.todayAttendance.outTime && !data.todayAttendance.inTime
+                  ? "check_in"
+                  : "check_out",
+            })
+          );
+        })
+        .catch(error => {
+          console.error("Error fetching geolocation data:", error);
+          notify("Failed to fetch geolocation data", true);
+          dispatch(setIsSubmitting(false));
+        });
+      // navigator.geolocation.getCurrentPosition((position) => {
+      //   console.log('geolocation found & hit api2')
+      //   dispatch(
+      //     makeAttendence({
+      //       jwt,
+      //       latitude: position.coords.latitude,
+      //       longitude: position.coords.longitude,
+      //       type:
+      //         !data.todayAttendance.outTime && !data.todayAttendance.inTime
+      //           ? "check_in"
+      //           : "check_out",
+      //     })
+      //   );
+      // });
     }
   }, 100);
   const barChartAttendance = {
@@ -182,7 +212,7 @@ function Dashboard(props) {
               />
               <div className="ms-2">
                 <h5 className="mb-0">
-                  <h1 style={{ color: "red" }}>{props.current_user.name}</h1> 
+                  <h1 style={{ color: "red" }}>{props.current_user.name}</h1>
                   Logged in through:{deviceOS}
                 </h5>
                 {/* <p className="text-muted mb-0">{props.current_user.email}</p> */}
@@ -284,7 +314,7 @@ function Dashboard(props) {
           </div>
         </div>
         <div className="col-lg-3 col-12">
-          {deviceOS=="Windows" && <div className="timezone mt-md-4 mt-0">
+          {(deviceOS == "Windows" || deviceOS == "Linux") && <div className="timezone mt-md-4 mt-0">
             <div className="mb-0">
               <span className="date-section">
                 Today: {date.toString().slice(0, 15)}

@@ -45,7 +45,7 @@ function Employees(props) {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
-  const [mobile_no, setMobile_no] = useState() 
+  const [mobile_no, setMobile_no] = useState()
   const [alter_mobile_no, setAlter_mobile_no] = useState()
   const genderRef = useRef();
 
@@ -84,19 +84,19 @@ function Employees(props) {
     dispatch(getAll({ jwt }));
   }, [dispatch, jwt]);
 
-  useEffect(()=>{
-    if( data.singledata.length > 0){
+  useEffect(() => {
+    if (data.singledata.length > 0) {
       setMobile_no(data.singledata[0].mobile_no)
       setAlter_mobile_no(data.singledata[0].alternate_mobile_no)
     }
-  },[data.singledata])
+  }, [data.singledata])
 
   //...///
-//   let x 
-//   async function checkIfFileExists(filePath) {
-//     console.log("hiiii")
-    
-// }
+  //   let x 
+  //   async function checkIfFileExists(filePath) {
+  //     console.log("hiiii")
+
+  // }
 
 
   //...... submit ......//
@@ -111,7 +111,7 @@ function Employees(props) {
       setShowMac(false)
     }
   }, [data.isError, dispatch]);
-  const handelSubmit = async(e) => {
+  const handelSubmit = async (e) => {
     e.preventDefault();
     if (!isEdit) {
       //... Create Record ...//
@@ -152,85 +152,85 @@ function Employees(props) {
       const filePath = data.singledata[0].image_path
       const docRef = ref(storage, filePath)
       try {
-          await getDownloadURL(docRef)
-          console.log("in",true)
-          dispatch(
-            updateRecord({
-              jwt,
-              id: data.singledata[0]._id,
-              oldimage_path: data.singledata[0].image_path,
-              oldimage_link: data.singledata[0].image_link,
-              name:
-                firstNameRef.current.value.trim() +
-                " " +
-                lastNameRef.current.value.trim(),
-              email: emailRef.current.value.trim(),
-              mobile: mobile_no.trim(),
-              alternetMobile: alter_mobile_no,
-              gender: genderRef.current.value.trim(),
-              current_address: {
-                address: addressRef.current.value.trim(),
-                state: stateRef.current.value.trim(),
-                country: countryRef.current.value.trim(),
-                pincode: pinCodeRef.current.value.trim(),
-              },
-              parmanent_address: {
-                address: paddressRef.current.value.trim(),
-                state: pstateRef.current.value.trim(),
-                country: pcountryRef.current.value.trim(),
-                pincode: ppinCodeRef.current.value.trim(),
-              },
-              salary: basicSalaryRef.current.value.trim(),
-              shift: shiftRef.current.value.trim(),
-              designation: degRef.current.value.trim(),
-              date_of_joining: joiningRef.current.value.trim(),
-              image: imageRef.current.files[0],
-              slip: slip,
-              is_send: isEmailSent,
-            })
-          );
-          return true
+        await getDownloadURL(docRef)
+        console.log("in", true)
+        dispatch(
+          updateRecord({
+            jwt,
+            id: data.singledata[0]._id,
+            oldimage_path: data.singledata[0].image_path,
+            oldimage_link: data.singledata[0].image_link,
+            name:
+              firstNameRef.current.value.trim() +
+              " " +
+              lastNameRef.current.value.trim(),
+            email: emailRef.current.value.trim(),
+            mobile: mobile_no.trim(),
+            alternetMobile: alter_mobile_no,
+            gender: genderRef.current.value.trim(),
+            current_address: {
+              address: addressRef.current.value.trim(),
+              state: stateRef.current.value.trim(),
+              country: countryRef.current.value.trim(),
+              pincode: pinCodeRef.current.value.trim(),
+            },
+            parmanent_address: {
+              address: paddressRef.current.value.trim(),
+              state: pstateRef.current.value.trim(),
+              country: pcountryRef.current.value.trim(),
+              pincode: ppinCodeRef.current.value.trim(),
+            },
+            salary: basicSalaryRef.current.value.trim(),
+            shift: shiftRef.current.value.trim(),
+            designation: degRef.current.value.trim(),
+            date_of_joining: joiningRef.current.value.trim(),
+            image: imageRef.current.files[0],
+            slip: slip,
+            is_send: isEmailSent,
+          })
+        );
+        return true
       } catch (error) {
-          console.log("in",false)
-          dispatch(
-            updateRecord({
-              jwt,
-              id: data.singledata[0]._id,
-              oldimage_path: null,
-              oldimage_link: null,
-              name:
-                firstNameRef.current.value.trim() +
-                " " +
-                lastNameRef.current.value.trim(),
-              email: emailRef.current.value.trim(),
-              mobile: mobile_no.trim(),
-              alternetMobile: alter_mobile_no,
-              gender: genderRef.current.value.trim(),
-              current_address: {
-                address: addressRef.current.value.trim(),
-                state: stateRef.current.value.trim(),
-                country: countryRef.current.value.trim(),
-                pincode: pinCodeRef.current.value.trim(),
-              },
-              parmanent_address: {
-                address: paddressRef.current.value.trim(),
-                state: pstateRef.current.value.trim(),
-                country: pcountryRef.current.value.trim(),
-                pincode: ppinCodeRef.current.value.trim(),
-              },
-              salary: basicSalaryRef.current.value.trim(),
-              shift: shiftRef.current.value.trim(),
-              designation: degRef.current.value.trim(),
-              date_of_joining: joiningRef.current.value.trim(),
-              image: imageRef.current.files[0],
-              slip: slip,
-              is_send: isEmailSent,
-            })
-          );
-          return false
-          
+        console.log("in", false)
+        dispatch(
+          updateRecord({
+            jwt,
+            id: data.singledata[0]._id,
+            oldimage_path: null,
+            oldimage_link: null,
+            name:
+              firstNameRef.current.value.trim() +
+              " " +
+              lastNameRef.current.value.trim(),
+            email: emailRef.current.value.trim(),
+            mobile: mobile_no.trim(),
+            alternetMobile: alter_mobile_no,
+            gender: genderRef.current.value.trim(),
+            current_address: {
+              address: addressRef.current.value.trim(),
+              state: stateRef.current.value.trim(),
+              country: countryRef.current.value.trim(),
+              pincode: pinCodeRef.current.value.trim(),
+            },
+            parmanent_address: {
+              address: paddressRef.current.value.trim(),
+              state: pstateRef.current.value.trim(),
+              country: pcountryRef.current.value.trim(),
+              pincode: ppinCodeRef.current.value.trim(),
+            },
+            salary: basicSalaryRef.current.value.trim(),
+            shift: shiftRef.current.value.trim(),
+            designation: degRef.current.value.trim(),
+            date_of_joining: joiningRef.current.value.trim(),
+            image: imageRef.current.files[0],
+            slip: slip,
+            is_send: isEmailSent,
+          })
+        );
+        return false
+
       }
-      
+
     }
   };
   //shorting.....
@@ -431,16 +431,16 @@ function Employees(props) {
     setFile({ ...file, image: image, adhar: adhar, pan: pan });
   };
 
-  const handlemacShow = (id)=>{
+  const handlemacShow = (id) => {
     console.log(id)
     setId(id)
     setShowMac(true)
   }
-  const handlecleanMac = ()=>{
-    dispatch(clearMacAddress({jwt, id}))
+  const handlecleanMac = () => {
+    dispatch(clearMacAddress({ jwt, id }))
   }
 
-  
+
   if (data.isFirstLoading) return <Loader />;
 
   if (!view)
@@ -460,40 +460,40 @@ function Employees(props) {
                     data={
                       data.allData.length > 0
                         ? data.allData.map((prod, index) => {
-                            return {
-                              "S.No.": index + 1,
-                              "User Name": prod.name,
-                              Gender:
-                                prod.gender === "F"
-                                  ? "Female"
-                                  : prod.gender === "M"
+                          return {
+                            "S.No.": index + 1,
+                            "User Name": prod.name,
+                            Gender:
+                              prod.gender === "F"
+                                ? "Female"
+                                : prod.gender === "M"
                                   ? "Male"
                                   : "Other",
-                              "Phone Number": prod.mobile_no,
-                              "Alternate Number": prod.alternate_mobile_no
-                                ? prod.alternate_mobile_no
-                                : "N/A",
-                              Email: prod.email,
-                              "Current Address": prod.current_address
-                                ? prod.current_address.address +
-                                  ", " +
-                                  prod.current_address.state +
-                                  ", " +
-                                  prod.current_address.country +
-                                  ", " +
-                                  prod.current_address.pincode
-                                : "N/A",
-                              "Department And Degignation": prod.designation
-                                ? prod.designation.department
-                                  ? prod.designation.name +
-                                    "(" +
-                                    prod.designation.department.name +
-                                    ")"
-                                  : "N/A"
-                                : "N/A",
-                              "Created At": prod.created_at,
-                            };
-                          })
+                            "Phone Number": prod.mobile_no,
+                            "Alternate Number": prod.alternate_mobile_no
+                              ? prod.alternate_mobile_no
+                              : "N/A",
+                            Email: prod.email,
+                            "Current Address": prod.current_address
+                              ? prod.current_address.address +
+                              ", " +
+                              prod.current_address.state +
+                              ", " +
+                              prod.current_address.country +
+                              ", " +
+                              prod.current_address.pincode
+                              : "N/A",
+                            "Department And Degignation": prod.designation
+                              ? prod.designation.department
+                                ? prod.designation.name +
+                                "(" +
+                                prod.designation.department.name +
+                                ")"
+                                : "N/A"
+                              : "N/A",
+                            "Created At": prod.created_at,
+                          };
+                        })
                         : " "
                     }
                     filename={`employee-${new Date(
@@ -517,19 +517,19 @@ function Employees(props) {
                   <option value={""}>Filter User A/C Department</option>
                   {data.headAllData.length > 0
                     ? data.headAllData.map((result, index) => {
-                        const { departments } = result;
-                        return (
-                          <optgroup key={`opt-${index}`} label={result.name}>
-                            {departments.length > 0
-                              ? departments.map((result, index1) => (
-                                  <option key={index1} value={result.id}>
-                                    <TitleCase text={result.name} />
-                                  </option>
-                                ))
-                              : ""}
-                          </optgroup>
-                        );
-                      })
+                      const { departments } = result;
+                      return (
+                        <optgroup key={`opt-${index}`} label={result.name}>
+                          {departments.length > 0
+                            ? departments.map((result, index1) => (
+                              <option key={index1} value={result.id}>
+                                <TitleCase text={result.name} />
+                              </option>
+                            ))
+                            : ""}
+                        </optgroup>
+                      );
+                    })
                     : ""}
                 </Form.Select>
               </div>
@@ -596,116 +596,121 @@ function Employees(props) {
                           <td colSpan={8}>Loading...</td>
                         </tr>
                       ) : data.allData.length > 0 ? (
-                        data.allData.map((result, index) => (
-                          <tr key={index}>
-                            <td>
-                              {(data.pagination_AllData.currentpage - 1) * 10 +
-                                (index + 1)}
-                            </td>
-                            <td>
-                              <div className="d-flex">
-                                {/* <img
-                                  src={
-                                    result.image_link ? result.image_link : User
-                                  }
-                                  alt="User"
-                                  className="img-fluid rounded-circle"
-                                  style={{ width: "40px", height: "40px" }}
-                                /> */}
-                                <div className="ms-3">
-                                  <h6 className="mb-0 ">
-                                    <TitleCase text={result.name} />
-                                  </h6>
-                                  <small className="mb-0 text-muted">
-                                    {result.email}
-                                  </small>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="ms-3">
-                                <h6 className="mb-0 ">
-                                  <TitleCase text={result.designation.name} />
-                                </h6>
-                                <small className="mb-0 text-muted">
-                                  <TitleCase
-                                    text={
-                                      result.designation.department.user_head
+                        data.allData.map((result, index) => {
+                          console.log('result:', result, '\nindex:', index);
+                          // if (result.name != "Admin") {
+                            return (
+                              <tr key={index}>
+                                <td>
+                                  {(data.pagination_AllData.currentpage - 1) * 10 +
+                                    (index + 1)}
+                                </td>
+                                <td>
+                                  <div className="d-flex">
+                                    {/* <img
+                                    src={
+                                      result.image_link ? result.image_link : User
                                     }
-                                  />
-                                </small>
-                              </div>
-                            </td>
-                            <td>
-                              {result.mobile_no}{result.alternate_mobile_no &&`, ${result.alternate_mobile_no}`}
-                            </td>
-                            <td>
-                              {result.gender === "F"
-                                ? "Female"
-                                : result.gender === "M"
-                                ? "Male"
-                                : "Other"}
-                            </td>
-                            <td>
-                              <address>
-                                <TitleCase
-                                  text={result.current_address.address}
-                                />
-                                ,<br />
-                                <TitleCase
-                                  text={result.current_address.state}
-                                />
-                                ,<br />
-                                <TitleCase
-                                  text={result.current_address.country}
-                                />
-                                ,
-                                <TitleCase
-                                  text={result.current_address.pincode}
-                                />
-                              </address>
-                            </td>
-                            <td className="table-data-btn">
-                              {!result.is_deleted && (
-                                <Button
-                                  onClick={() => {
-                                    handleShow(
-                                      result._id,
-                                      true,
-                                      result.designation.max_salary,
-                                      result.designation.min_salary
-                                    );
-                                  }}
-                                  className="btn btn-warning text-white"
-                                >
-                                  Edit
-                                </Button>
-                              )}
-                              <Button
-                                  onClick={() =>handlemacShow(result._id)}
-                                  className="btn btn-danger text-white"
-                                >
-                                  Clear&#10240;MAC
-                                </Button>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handelview(
-                                    result._id,
-                                    result.image_path,
-                                    result.aadharCard_path,
-                                    result.panCard_path,
-                                    result.is_deleted
-                                  )
-                                }
-                                className="w-100 btn btn-primary"
-                              >
-                                View
-                              </button>
-                              
-                            </td>
-                          </tr>
-                        ))
+                                    alt="User"
+                                    className="img-fluid rounded-circle"
+                                    style={{ width: "40px", height: "40px" }}
+                                  /> */}
+                                    <div className="ms-3">
+                                      <h6 className="mb-0 ">
+                                        <TitleCase text={result.name} />
+                                      </h6>
+                                      <small className="mb-0 text-muted">
+                                        {result.email}
+                                      </small>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div className="ms-3">
+                                    <h6 className="mb-0 ">
+                                      <TitleCase text={result.designation.name} />
+                                    </h6>
+                                    <small className="mb-0 text-muted">
+                                      <TitleCase
+                                        text={
+                                          result.designation?.department?.user_head
+                                        }
+                                      />
+                                    </small>
+                                  </div>
+                                </td>
+                                <td>
+                                  {result.mobile_no}{result.alternate_mobile_no && `, ${result.alternate_mobile_no}`}
+                                </td>
+                                <td>
+                                  {result.gender === "F"
+                                    ? "Female"
+                                    : result.gender === "M"
+                                      ? "Male"
+                                      : "Other"}
+                                </td>
+                                <td>
+                                  <address>
+                                    <TitleCase
+                                      text={result.current_address?.address}
+                                    />
+                                    ,<br />
+                                    <TitleCase
+                                      text={result.current_address?.state}
+                                    />
+                                    ,<br />
+                                    <TitleCase
+                                      text={result.current_address?.country}
+                                    />
+                                    ,
+                                    <TitleCase
+                                      text={result.current_address?.pincode}
+                                    />
+                                  </address>
+                                </td>
+                                <td className="table-data-btn">
+                                  {!result.is_deleted && (
+                                    <Button
+                                      onClick={() => {
+                                        handleShow(
+                                          result._id,
+                                          true,
+                                          result.designation.max_salary,
+                                          result.designation.min_salary
+                                        );
+                                      }}
+                                      className="btn btn-warning text-white"
+                                    >
+                                      Edit
+                                    </Button>
+                                  )}
+                                  <Button
+                                    onClick={() => handlemacShow(result._id)}
+                                    className="btn btn-danger text-white"
+                                  >
+                                    Clear&#10240;MAC
+                                  </Button>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      handelview(
+                                        result._id,
+                                        result.image_path,
+                                        result.aadharCard_path,
+                                        result.panCard_path,
+                                        result.is_deleted
+                                      )
+                                    }
+                                    className="w-100 btn btn-primary"
+                                  >
+                                    View
+                                  </button>
+
+                                </td>
+                              </tr>
+                            )
+                          // }
+                        })
                       ) : (
                         <tr key={-1}>
                           <td colSpan={8} className="text-center">
@@ -787,8 +792,8 @@ function Employees(props) {
                               {result.gender === "F"
                                 ? "Female"
                                 : result.gender === "M"
-                                ? "Male"
-                                : "Other"}
+                                  ? "Male"
+                                  : "Other"}
                             </td>
                             <td>
                               <address>
@@ -834,14 +839,14 @@ function Employees(props) {
                                       jwt,
                                       pageno:
                                         data.deleted_allData.length === 1 &&
-                                        data.pagination_Deleted_AllData
-                                          .currentpage > 1
+                                          data.pagination_Deleted_AllData
+                                            .currentpage > 1
                                           ? Number(
-                                              data.pagination_Deleted_AllData
-                                                .currentpage
-                                            ) - 1
+                                            data.pagination_Deleted_AllData
+                                              .currentpage
+                                          ) - 1
                                           : data.pagination_Deleted_AllData
-                                              .currentpage,
+                                            .currentpage,
                                     })
                                   )
                                 }
@@ -894,9 +899,9 @@ function Employees(props) {
                       defaultValue={
                         data.singledata.length > 0
                           ? data.singledata[0].name
-                              .split(" ")
-                              .slice(0, 1)
-                              .join(" ")
+                            .split(" ")
+                            .slice(0, 1)
+                            .join(" ")
                           : ""
                       }
                       placeholder="First Name"
@@ -905,15 +910,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "name" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "name" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -929,9 +934,9 @@ function Employees(props) {
                       defaultValue={
                         data.singledata.length > 0
                           ? data.singledata[0].name
-                              .split(" ")
-                              .slice(-1)
-                              .join(" ")
+                            .split(" ")
+                            .slice(-1)
+                            .join(" ")
                           : ""
                       }
                       placeholder="Last Name"
@@ -962,15 +967,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "gender" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "gender" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1000,15 +1005,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "current_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "address") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "current_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "address") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1032,15 +1037,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "current_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "state") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "current_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "state") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1080,15 +1085,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "current_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "pincode") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "current_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "pincode") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1126,15 +1131,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "parmanent_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "address") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "parmanent_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "address") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1158,15 +1163,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "parmanent_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "state") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "parmanent_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "state") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1186,15 +1191,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "parmanent_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "country") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "parmanent_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "country") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1220,15 +1225,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) => {
-                            const { param } = err;
-                            if (param === "parmanent_address") {
-                              const msg = JSON.parse(err.msg);
-                              if (msg.param === "pincode") {
-                                return <TitleCase text={msg.msg} />;
-                              }
+                          const { param } = err;
+                          if (param === "parmanent_address") {
+                            const msg = JSON.parse(err.msg);
+                            if (msg.param === "pincode") {
+                              return <TitleCase text={msg.msg} />;
                             }
-                            return true;
-                          })
+                          }
+                          return true;
+                        })
                         : ""}
                     </span>
                   </Form.Group>
@@ -1243,7 +1248,7 @@ function Employees(props) {
                       placeholder="Enter phone number"
                       international={true}
                       defaultCountry="IN"
-                      countries={["IN","AE"]}
+                      countries={["IN", "AE"]}
                       defaultValue={
                         data.singledata.length > 0
                           ? data.singledata[0].mobile_no
@@ -1266,15 +1271,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "mobile_no" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "mobile_no" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1286,7 +1291,7 @@ function Employees(props) {
                       placeholder="Enter phone number"
                       international={true}
                       defaultCountry="IN"
-                      countries={["IN","AE"]}
+                      countries={["IN", "AE"]}
                       defaultValue={
                         data.singledata.length > 0
                           ? data.singledata[0].alternate_mobile_no
@@ -1327,15 +1332,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "email" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "email" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1359,24 +1364,24 @@ function Employees(props) {
                       <option value={""}> Select</option>
                       {data.allShiftData.length > 0
                         ? data.allShiftData.map((result, index) => (
-                            <option key={index} value={result._id}>
-                              {result.shift}
-                            </option>
-                          ))
+                          <option key={index} value={result._id}>
+                            {result.shift}
+                          </option>
+                        ))
                         : ""}
                     </Form.Select>
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "shift" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "shift" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1404,52 +1409,52 @@ function Employees(props) {
                       </option>
                       {data.alldesignation.length > 0
                         ? data.alldesignation.map((result, ind) => {
-                            let { name, departments } = result;
-                            return (
-                              <Fragment key={ind}>
-                                {departments.length > 0
-                                  ? departments.map((result1, index1) => {
-                                      let { designation } = result1;
-                                      return (
-                                        <optgroup
-                                          key={`opt-${index1}`}
-                                          label={
-                                            result1.name + "(" + name + ")"
-                                          }
-                                        >
-                                          {designation.length > 0
-                                            ? designation.map(
-                                                (result3, index) => (
-                                                  <option
-                                                    key={`option-${index}`}
-                                                    value={result3._id}
-                                                  >
-                                                    {result3.name}
-                                                  </option>
-                                                )
-                                              )
-                                            : ""}
-                                        </optgroup>
-                                      );
-                                    })
-                                  : ""}
-                              </Fragment>
-                            );
-                          })
+                          let { name, departments } = result;
+                          return (
+                            <Fragment key={ind}>
+                              {departments.length > 0
+                                ? departments.map((result1, index1) => {
+                                  let { designation } = result1;
+                                  return (
+                                    <optgroup
+                                      key={`opt-${index1}`}
+                                      label={
+                                        result1.name + "(" + name + ")"
+                                      }
+                                    >
+                                      {designation.length > 0
+                                        ? designation.map(
+                                          (result3, index) => (
+                                            <option
+                                              key={`option-${index}`}
+                                              value={result3._id}
+                                            >
+                                              {result3.name}
+                                            </option>
+                                          )
+                                        )
+                                        : ""}
+                                    </optgroup>
+                                  );
+                                })
+                                : ""}
+                            </Fragment>
+                          );
+                        })
                         : ""}
                     </Form.Select>
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "designation" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "designation" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1473,15 +1478,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "date_of_joining" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "date_of_joining" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1511,15 +1516,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "salary" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "salary" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1542,15 +1547,15 @@ function Employees(props) {
                     <span className="text-danger">
                       {data.errors.length > 0
                         ? data.errors.map((err) =>
-                            err.param === "image" ? (
-                              <TitleCase
-                                key={"err" + err.param}
-                                text={err.msg}
-                              />
-                            ) : (
-                              ""
-                            )
+                          err.param === "image" ? (
+                            <TitleCase
+                              key={"err" + err.param}
+                              text={err.msg}
+                            />
+                          ) : (
+                            ""
                           )
+                        )
                         : ""}
                     </span>
                   </Form.Group>
@@ -1560,8 +1565,8 @@ function Employees(props) {
                         selectedFile
                           ? preview
                           : data.singledata.length > 0
-                          ? data.singledata[0].image_link
-                          : Verdi
+                            ? data.singledata[0].image_link
+                            : Verdi
                       }
                       alt="Preview"
                     />
@@ -1618,7 +1623,7 @@ function Employees(props) {
             </Form>
           </Modal.Body>
         </Modal>
-        <Modal show={showMac} onHide={()=>setShowMac(false)}>
+        <Modal show={showMac} onHide={() => setShowMac(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Clear</Modal.Title>
           </Modal.Header>
@@ -1632,7 +1637,7 @@ function Employees(props) {
             >
               Yes
             </Button>
-            <Button variant="primary" onClick={()=>setShowMac(false)}>
+            <Button variant="primary" onClick={() => setShowMac(false)}>
               No
             </Button>
           </Modal.Footer>

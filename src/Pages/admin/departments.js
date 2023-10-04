@@ -54,6 +54,7 @@ function Departments(props) {
   //...... Create Submit ......//
 
   const handelsubmit = (e) => {
+    console.log('in handle Submit for Add new department')
     e.preventDefault();
     dispatch(
       addRecord({

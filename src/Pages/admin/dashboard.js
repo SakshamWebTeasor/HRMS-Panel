@@ -4,7 +4,7 @@ import { getAll } from "../../store/admin/dashboard";
 import "./dashboard.css";
 import { BiCoinStack } from "react-icons/bi";
 import { GiBanknote } from "react-icons/gi";
-import User from "../../assets/images/user.jpg";
+import User from "../../assets/images/wt2.png";
 import Chart from "react-apexcharts";
 import Loader from "../../Components/loader";
 import TitleCase from "../../helper/title-case";
