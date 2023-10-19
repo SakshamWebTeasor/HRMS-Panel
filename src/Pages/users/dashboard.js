@@ -10,6 +10,7 @@ import Chart from "react-apexcharts";
 import Loader from "../../Components/loader";
 import { Spinner } from "react-bootstrap";
 import Watch, { CalculateRealTimePresence } from "../../helper/watch";
+// import { findUUid } from "../../helper/findUUid";
 const env = require('../../env.json');
 
 
@@ -17,6 +18,7 @@ const env = require('../../env.json');
 function Dashboard(props) {
 
   const [ip, setIP] = useState("");
+  const [uuid, setUuid] = useState(null);
 
   const dispatch = useDispatch();
   const socket = props.socket
@@ -37,12 +39,15 @@ function Dashboard(props) {
 
   function getDeviceOS() {
     const userAgent = navigator.userAgent.toLowerCase();
-
+    console.log('userAgent', userAgent);
     if (userAgent.includes("android")) {
       return "Android";
     } else if (userAgent.includes("iphone") || userAgent.includes("ipad") || userAgent.includes("ipod")) {
       return "iOS";
+    } else if (userAgent.includes("macintosh")) {
+      return "mac";
     } else if (userAgent.includes("windows")) {
+      // setUuid(findUUid())
       return "Windows";
     } else if (userAgent.includes("linux")) {
       return "Linux";
@@ -314,7 +319,7 @@ function Dashboard(props) {
           </div>
         </div>
         <div className="col-lg-3 col-12">
-          {(deviceOS == "Windows" || deviceOS == "Linux") && <div className="timezone mt-md-4 mt-0">
+          {(deviceOS == "Windows" || deviceOS == "Linux" || deviceOS == "mac") && <div className="timezone mt-md-4 mt-0">
             <div className="mb-0">
               <span className="date-section">
                 Today: {date.toString().slice(0, 15)}
