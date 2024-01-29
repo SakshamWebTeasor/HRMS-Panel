@@ -93,17 +93,55 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
       const newTax = [...invoiceData.tax];
       let changeInTax = field == "taxRate";
       value = changeInTax ? parseInt(value) : value;
-      if (value < 0) value = 0;
+      if (!isNaN(value)) value = value < 0 ? 0 : value;
       const prevTax = newTax[index];
       newTax[index] = {
         ...newTax[index],
         [field]: value,
       };
+      let taxValue = value;
+      if (field == "taxName") {
+        changeInTax = true;
+        switch (newTax[index].taxName) {
+          case "GST":
+            newTax[index].taxRate = 18;
+            taxValue = 18;
+            break;
+          case "HST":
+            newTax[index].taxRate = 13;
+            taxValue = 13;
+            break;
+          case "TAX":
+            newTax[index].taxRate = 10;
+            taxValue = 10;
+            break;
+          case "VAT":
+            newTax[index].taxRate = 5;
+            taxValue = 5;
+            break;
+          case "SST":
+            newTax[index].taxRate = 5;
+            taxValue = 5;
+            break;
+          case "PPN":
+            newTax[index].taxRate = 10;
+            taxValue = 10;
+            break;
+          case "IGST":
+            newTax[index].taxRate = 18;
+            taxValue = 18;
+            break;
+          default:
+            newTax[index].taxRate = 0;
+            taxValue = 0;
+            break;
+        }
+      }
       setInvoiceData({
         ...invoiceData,
         tax: newTax,
         totalTax: changeInTax
-          ? invoiceData.totalTax - prevTax.taxRate + value
+          ? invoiceData.totalTax - prevTax.taxRate + taxValue
           : invoiceData.totalTax,
       });
       return;
@@ -405,24 +443,68 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
         {invoiceData.tax.map((item, index) => (
           <div key={index} className="project-info">
             <label>Tax Name</label>
-            <input
+            {/* <input
               type="text"
               value={item.taxName}
               onChange={(e) =>
                 handleItemChange(index, "taxName", e.target.value, "tax")
               }
-            />
+            /> */}
+            <select
+              className="form-control form-select mb15"
+              value={item.taxName}
+              onChange={(e) =>
+                handleItemChange(index, "taxName", e.target.value, "tax")
+              }
+            >
+              <option value="">custom tax</option>
+              <option value="None">None</option>
+              <option value="GST">GST</option>
+              <option value="IGST">IGST</option>
+              <option value="VAT">VAT</option>
+              <option value="PPN">PPN</option>
+              <option value="SST">SST</option>
+              <option value="HST">HST</option>
+              <option value="TAX">TAX</option>
+            </select>
+            {item.taxName !== "None" &&
+              item.taxName !== "GST" &&
+              item.taxName !== "IGST" &&
+              item.taxName !== "VAT" &&
+              item.taxName !== "PPN" &&
+              item.taxName !== "SST" &&
+              item.taxName !== "HST" &&
+              item.taxName !== "TAX" && (
+                <input
+                  type="text"
+                  placeholder="Enter custom tax name"
+                  value={item.taxName}
+                  onChange={(e) =>
+                    handleItemChange(index, "taxName", e.target.value, "tax")
+                  }
+                />
+              )}
             <label>Rate (in %)</label>
             <input
               type="number"
+              disabled={
+                item.taxName.includes("GST") ||
+                item.taxName.includes("HST") ||
+                item.taxName.includes("TAX") ||
+                item.taxName.includes("VAT") ||
+                item.taxName.includes("SST") ||
+                item.taxName.includes("PPN") ||
+                item.taxName.includes("IGST") ||
+                item.taxName.includes("None")
+              }
               value={item.taxRate}
               onChange={(e) =>
                 handleItemChange(index, "taxRate", e.target.value, "tax")
               }
             />
-            <button onClick={() => handleRemoveItem(index, "tax")}>
+            {index !== 0 && <button onClick={() => handleRemoveItem(index, "tax")}>
               Remove This Tax
-            </button>
+            </button>}
           </div>
         ))}
         <div className="d-flex justify-content-end">
