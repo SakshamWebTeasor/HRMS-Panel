@@ -26,13 +26,13 @@ import {
   HiOutlineDocumentReport,
 } from "react-icons/hi";
 import { RiBuilding2Fill } from "react-icons/ri";
-import { FaBullhorn, FaBusinessTime } from "react-icons/fa";
+import { FaBullhorn, FaBusinessTime, FaFileInvoice } from "react-icons/fa";
 import {
   MdOutlineFormatTextdirectionLToR,
   MdPolicy,
   MdOutlineHolidayVillage,
 } from "react-icons/md";
-import { GoClippy } from "react-icons/go";
+import { GoPin } from "react-icons/go";
 import { FcLeave } from "react-icons/fc";
 
 import Logo from "../../assets/images/logo.png";
@@ -159,7 +159,7 @@ function Header(props) {
                     <Nav.Link eventKey="3" as={Link} to="/leave" 
                       className={isActive === "/leave" ? "active" : ""}
                       onClick={() => setIsActive("/leave")}>
-                        <GoClippy />
+                        <GoPin />
                         <span className="ms-2">Leave</span>
                     </Nav.Link>
                     <Nav.Link eventKey="4" as={Link} to="/salary" 
@@ -205,7 +205,13 @@ function Header(props) {
                       className={isActive === "/designation" ? "active" : ""}
                       onClick={() => setIsActive("/designation")}>
                         <AiOutlineApartment />
-                        <span className="ms-2">Degignation</span>
+                        <span className="ms-2">Designation</span>
+                    </Nav.Link>
+                    <Nav.Link eventKey="9" as={Link} to="/invoice" 
+                      className={isActive === "/invoice" ? "active" : ""}
+                      onClick={() => setIsActive("/invoice")}>
+                        <FaFileInvoice />
+                        <span className="ms-2">Invoice</span>
                     </Nav.Link>
                     
                     <Nav.Link eventKey="10" as={Link} to="/policies" 
@@ -247,7 +253,7 @@ function Header(props) {
                     <Nav.Link eventKey="16" as={Link} to="/leave-request"
                       className={isActive === "/leave-request" ? "active" : ""}
                       onClick={() => setIsActive("/leave-request")}>
-                      <GoClippy />
+                      <GoPin />
                         <span className="ms-2">Leave Request</span>
                     </Nav.Link>
                     <Nav.Link eventKey="17" as={Link} to="/leave-type"
@@ -475,7 +481,7 @@ function Header(props) {
   //                       }
   //                       onClick={() => setIsActive("/leave-request")}
   //                     >
-  //                       <GoClippy />
+  //                       <GoPin />
   //                       <span className="ms-2">Leave Request</span>
   //                     </li>
   //                   </Nav.Link>
@@ -533,7 +539,7 @@ function Header(props) {
   //                       className={isActive === "/leave" ? "active" : ""}
   //                       onClick={() => setIsActive("/leave")}
   //                     >
-  //                       <GoClippy />
+  //                       <GoPin />
   //                       <span className="ms-2">Leave</span>
   //                     </li>
   //                   </Nav.Link>

@@ -29,6 +29,7 @@ import userSalarySlice from './user/salary';
 import userAnnouncementSlice from './user/announcement'
 import userPolicySlice from './user/policy'
 import userHolidaySlice from './user/holiday'
+// import { invoiceSlice } from "./admin/invoice";
 const store = configureStore({
     reducer : {
         auth : authSlice.reducer,
@@ -50,6 +51,7 @@ const store = configureStore({
         holiday : holidaySlice,
         leaveType :leaveTypeSlice,
         whiteListIP: whiteListIPSlice,
+        // invoice: invoiceSlice,
 
         userDashboard : userDashboardSlice,
         userAttendance : userAttendanceSlice,

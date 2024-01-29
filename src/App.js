@@ -24,6 +24,7 @@ const PresentAbsent = React.lazy(()=>import('./Pages/admin/components/employee-p
 const Employees = React.lazy(() => import("./Pages/admin/employees"));
 const Departments = React.lazy(() => import("./Pages/admin/departments"));
 const Designation = React.lazy(() => import("./Pages/admin/designation"));
+const Invoice = React.lazy(() => import("./Pages/admin/invoice"));
 const Policies = React.lazy(() => import("./Pages/admin/policies"));
 const Holiday = React.lazy(() => import("./Pages/admin/holiday"));
 const Announcement = React.lazy(() => import("./Pages/admin/announcement"));
@@ -117,10 +118,13 @@ function App() {
                       path="/departments"
                       element={<Departments jwt={data.jwt} notify={notify}  />}
                     />{" "}
-                    jwt = {data.jwt}
                     <Route
                       path="/designation"
                       element={<Designation jwt={data.jwt} notify={notify} />}
+                    />
+                    <Route
+                      path="/invoice"
+                      element={<Invoice jwt={data.jwt} notify={notify} />}
                     />
                     <Route
                       path="/policies"
