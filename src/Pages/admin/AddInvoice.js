@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./invoice.css"; // Import your CSS file for additional styling if needed
 import TitleCase from "../../helper/title-case";
 import { addInvoice, editInvoice } from "../../store/admin/invoice";
+import { allCurrencies } from "./allCurrencies";
 
-const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
+const AddInvoice = ({
+  setInvoiceList,
+  jwt,
+  updateData,
+  setUpdateData,
+  currencyExchange,
+}) => {
   const dateConverter = (date) => {
     const dateObj = new Date(date);
     const year = dateObj.getFullYear();
@@ -131,19 +138,23 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
             newTax[index].taxRate = 18;
             taxValue = 18;
             break;
+          case "None":
+            newTax[index].taxRate = 0;
+            taxValue = 0;
+            break;
           default:
             newTax[index].taxRate = 0;
             taxValue = 0;
             break;
         }
       }
-      setInvoiceData({
-        ...invoiceData,
+      setInvoiceData((prevData) => ({
+        ...prevData,
         tax: newTax,
         totalTax: changeInTax
           ? invoiceData.totalTax - prevTax.taxRate + taxValue
           : invoiceData.totalTax,
-      });
+      }));
       return;
     }
     const newItems = [...invoiceData.items];
@@ -229,6 +240,16 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
                 (invoice) => invoice.invoiceNo !== response.invoiceNo
               )
             : [];
+        const fieldVal =
+          response.grandTotalAmount /
+          currencyExchange.currencies.filter(
+            (item) => item.currencyCode === response.currency
+          )[0].conversionRateForAUnit;
+        response = {
+          ...response,
+          dueDate: lastDueData,
+          grandTotalAmountConverted: fieldVal,
+        };
         return [...filteredList, response];
       });
     }
@@ -242,8 +263,16 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
         const indexToUpdate = prevList.findIndex(
           (invoice) => invoice.invoiceNo === response.invoiceNo
         );
+        const fieldVal =
+          response.grandTotalAmount /
+          currencyExchange.currencies.filter(
+            (item) => item.currencyCode === response.currency
+          )[0].conversionRateForAUnit;
         if (indexToUpdate !== -1) {
-          prevList[indexToUpdate] = response;
+          prevList[indexToUpdate] = {
+            ...response,
+            grandTotalAmountConverted: fieldVal,
+          };
         } else {
           console.log("Element not found");
         }
@@ -263,8 +292,9 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
   }, [updateData]);
 
   useEffect(() => {
-    if (invoiceData.totalTax) {
+    if (parseInt(invoiceData.totalTax) > -1) {
       setInvoiceData((prevAmount) => {
+        console.log(prevAmount.totalTax);
         return {
           ...prevAmount,
           grandTotalAmount:
@@ -273,7 +303,7 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
         };
       });
     }
-  }, [invoiceData.totalTax]);
+  }, [invoiceData.totalTax, invoiceData.totalAmount]);
 
   return (
     <div className="invoice-container heightFix">
@@ -370,19 +400,11 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
           value={invoiceData.currency}
           onChange={(e) => handleInputChange("currency", e.target.value)}
         >
-          <option value="USD">United States Dollar (USD)</option>
-          <option value="EUR">Euro (EUR)</option>
-          <option value="GBP">British Pound Sterling (GBP)</option>
-          <option value="JPY">Japanese Yen (JPY)</option>
-          <option value="CHF">Swiss Franc (CHF)</option>
-          <option value="CAD">Canadian Dollar (CAD)</option>
-          <option value="AUD">Australian Dollar (AUD)</option>
-          <option value="INR">Indian Rupee (INR)</option>
-          <option value="CNY">Chinese Yuan (CNY)</option>
-          <option value="ZAR">South African Rand (ZAR)</option>
-          <option value="BRL">Brazilian Real (BRL)</option>
-          <option value="RUB">Russian Ruble (RUB)</option>
-          <option value="AED">Arab Emirates Dirham (AED)</option>
+          {allCurrencies.map((currency) => (
+            <option key={currency.code} value={currency.code}>
+              {currency.name}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -423,7 +445,11 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
                 handleItemChange(index, "description", e.target.value)
               }
             />
-            <button onClick={() => handleRemoveItem(index)}>Remove Item</button>
+            {index > 0 && (
+              <button onClick={() => handleRemoveItem(index)}>
+                Remove Item
+              </button>
+            )}
           </div>
         ))}
         <div className="d-flex justify-content-end">
@@ -502,9 +528,11 @@ const AddInvoice = ({ setInvoiceList, jwt, updateData, setUpdateData }) => {
                 handleItemChange(index, "taxRate", e.target.value, "tax")
               }
             />
-            {index !== 0 && <button onClick={() => handleRemoveItem(index, "tax")}>
-              Remove This Tax
-            </button>}
+            {index !== 0 && (
+              <button onClick={() => handleRemoveItem(index, "tax")}>
+                Remove This Tax
+              </button>
+            )}
           </div>
         ))}
         <div className="d-flex justify-content-end">

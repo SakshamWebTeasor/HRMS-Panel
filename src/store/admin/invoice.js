@@ -12,7 +12,8 @@ export const fetchAllInvoice = async (data) => {
     "Content-Type": "application/json",
     Authorization: data.jwt,
   };
-  let url = env.ADMIN_API_URL + "invoice";
+  const unit = data.unit ? `?unit=${data.unit}` : ""
+  let url = env.ADMIN_API_URL + "invoice" + unit;
   let option = {
     method: "GET",
     mode: "cors",
@@ -35,6 +36,34 @@ export const fetchAllInvoice = async (data) => {
     notify("no invoices found", true);
     console.log(error);
     return false;
+  }
+};
+
+export const fetchCurrencyUnit = async (unit) => {
+  const header = {
+    "Content-Type": "application/json",
+  };
+  let added_url = unit ? `?unit=${unit}`: ''
+  let url = env.BASE_URL + "getCurrencyRates" + added_url;
+  let option = {
+    method: "GET",
+    mode: "cors",
+    headers: header,
+  };
+  try {
+    const response = await (await fetch(url, option)).json();
+    if (response.status === "success") {
+      return {
+        currencies: response.currency.currencies,
+        mainCurrencyCode: response.currency.mainCurrencyCode,
+      };
+    } else {
+      for (const element of response.errors) {
+        notify(element.msg, true);
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -82,8 +111,8 @@ export const printThisInvoice = async (data) => {
     headers: header,
   };
   try {
-    const response = await fetch(url, option)
-    return response
+    const response = await fetch(url, option);
+    return response;
   } catch (error) {
     notify("no such invoice found to delete", true);
     console.log(error);

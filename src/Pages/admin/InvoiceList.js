@@ -4,31 +4,47 @@ import { Column } from "primereact/column";
 import { ToggleButton } from "primereact/togglebutton";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { deleteInvoice, printThisInvoice } from "../../store/admin/invoice";
+import { allCurrencies } from "./allCurrencies";
 
-function InvoiceList({ invoiceList, setInvoiceList, jwt, setUpdateData }) {
+function InvoiceList({
+  invoiceList,
+  setInvoiceList,
+  jwt,
+  setUpdateData,
+  currencyExchange,
+  setCurrencyExchange,
+}) {
   const [invoices, setInvoices] = useState([]);
   useEffect(() => {
     setInvoices(invoiceList);
   }, [invoiceList]);
-  const balanceTemplate = (rowData) => {
-    return (
-      <span className="font-bold">{formatCurrency(rowData.totalAmount)}</span>
-    );
-  };
 
   const balanceGTemplate = (rowData) => {
     return (
       <span className="font-bold">
-        {formatCurrency(rowData.grandTotalAmount)}
+        {formatCurrency(rowData.grandTotalAmount, rowData.currency)}
       </span>
     );
   };
 
-  const formatCurrency = (value) => {
-    return value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
+  const balanceGTemplateINR = (rowData) => {
+    return (
+      <span className="font-bold">
+        {formatCurrency(
+          rowData.grandTotalAmountConverted,
+          currencyExchange.mainCurrencyCode
+        )}
+      </span>
+    );
+  };
+
+  const formatCurrency = (value, currencyCode) => {
+    return (
+      value.toLocaleString("en-US", {
+        style: "currency",
+        currency: currencyCode || "USD",
+      }) || value
+    );
   };
 
   const handleDeleteInvoice = async (id) => {
@@ -80,8 +96,29 @@ function InvoiceList({ invoiceList, setInvoiceList, jwt, setUpdateData }) {
   };
 
   return (
-    <div className="invoice-container">
-      <h2>Invoice List</h2>
+    <div className="invoice-container heightFixR">
+      <div className="d-flex justify-content-between">
+        <h2>Invoice List</h2>
+        <div className="currency-info">
+          <label>Exchange Currency</label>
+          <select
+            className="form-control form-select"
+            value={currencyExchange.mainCurrencyCode}
+            onChange={(e) =>
+              setCurrencyExchange({
+                ...currencyExchange,
+                mainCurrencyCode: e.target.value,
+              })
+            }
+          >
+            {allCurrencies.map((currency) => (
+              <option key={currency.code} value={currency.code}>
+                {currency.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div>
         <DataTable
           value={invoices}
@@ -89,7 +126,7 @@ function InvoiceList({ invoiceList, setInvoiceList, jwt, setUpdateData }) {
           scrollHeight="1100px"
           className="mt-3"
           paginator
-          rows={12}
+          rows={11}
           dataKey="invoiceNo"
         >
           <Column
@@ -129,6 +166,7 @@ function InvoiceList({ invoiceList, setInvoiceList, jwt, setUpdateData }) {
             style={{ minWidth: "180px" }}
           ></Column>
           <Column
+            sortable
             field="currency"
             header="Currency"
             filter
@@ -150,10 +188,17 @@ function InvoiceList({ invoiceList, setInvoiceList, jwt, setUpdateData }) {
             alignFrozen="right"
           ></Column>
           <Column
-            sortable
             field="grandTotalAmount"
             header="Grand Total Amount"
             body={balanceGTemplate}
+            style={{ minWidth: "200px" }}
+            alignFrozen="right"
+          ></Column>
+          <Column
+            sortable
+            field="grandTotalAmountConverted"
+            header={`Grand Total (in ${currencyExchange.mainCurrencyCode})`}
+            body={balanceGTemplateINR}
             style={{ minWidth: "200px" }}
             alignFrozen="right"
           ></Column>
