@@ -162,3 +162,21 @@ export const allCurrencies = [
   { code: "ZMW", name: "Zambian Kwacha (ZMW)" },
   { code: "ZWL", name: "Zimbabwean Dollar (ZWL)" },
 ];
+
+
+export const ValidCurrency = [
+  { code: "USD", name: "United States Dollar (USD)" },
+  { code: "INR", name: "Indian Rupee (INR)" },
+  { code: "EUR", name: "Euro (EUR)" },
+  { code: "GBP", name: "British Pound Sterling (GBP)" },
+  { code: "AUD", name: "Australian Dollar (AUD)" },
+  { code: "JPY", name: "Japanese Yen (JPY)" },
+  { code: "CHF", name: "Swiss Franc (CHF)" },
+  { code: "CAD", name: "Canadian Dollar (CAD)" },
+  { code: "SGD", name: "Singapore Dollar (SGD)" },
+  { code: "CNY", name: "Chinese Yuan (CNY)" },
+  { code: "ZAR", name: "South African Rand (ZAR)" },
+  { code: "BRL", name: "Brazilian Real (BRL)" },
+  { code: "RUB", name: "Russian Ruble (RUB)" },
+  { code: "AED", name: "Arab Emirates Dirham (AED)" },
+]

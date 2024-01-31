@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/537.e2d2cef5.chunk.css","mappings":"AAAA,yBAEC,kBAAmB,CADnB,qBAED,CACA,yBACC,qBACD","sources":["Pages/admin/departments.css"],"sourcesContent":[".responsive .table > thead {\n\tvertical-align: bottom;\n\tbackground: #b0202c;\n}\n.responsive .table > tbody {\n\tvertical-align: middle;\n}"],"names":[],"sourceRoot":""}

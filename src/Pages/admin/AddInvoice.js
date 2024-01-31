@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./invoice.css"; // Import your CSS file for additional styling if needed
 import TitleCase from "../../helper/title-case";
 import { addInvoice, editInvoice } from "../../store/admin/invoice";
-import { allCurrencies } from "./allCurrencies";
+import { ValidCurrency, allCurrencies } from "./allCurrencies";
 
 const AddInvoice = ({
   setInvoiceList,
@@ -230,7 +230,7 @@ const AddInvoice = ({
   };
 
   const handleCreateInvoice = async () => {
-    const response = await addInvoice({ invoiceData, jwt });
+    let response = await addInvoice({ invoiceData, jwt });
     if (response) {
       setInvoiceData(InitialData);
       setInvoiceList((prevList) => {
@@ -394,13 +394,13 @@ const AddInvoice = ({
 
       {/* Currency Information */}
       <div className="currency-info">
-        <label>Currency</label>
+        <label>Valid Dealing Currencies</label>
         <select
           className="form-control form-select"
           value={invoiceData.currency}
           onChange={(e) => handleInputChange("currency", e.target.value)}
         >
-          {allCurrencies.map((currency) => (
+          {ValidCurrency.map((currency) => (
             <option key={currency.code} value={currency.code}>
               {currency.name}
             </option>
