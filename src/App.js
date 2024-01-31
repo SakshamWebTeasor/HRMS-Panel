@@ -2,13 +2,12 @@ import React, { useState, useEffect, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLogin } from "./store/auth";
-import {io} from "socket.io-client"
+import { io } from "socket.io-client";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
 
 import Loader from "./Components/loader";
 import Header from "./Components/Header";
@@ -16,14 +15,17 @@ import Footer from "./Components/Footer";
 import Sidebar from "./Components/sidebar";
 import WhiteListIP from "./Pages/admin/white-list-ip";
 
-const env = require('./env.json');
+const env = require("./env.json");
 
 const Login = React.lazy(() => import("./Pages/Login"));
 const Dashboard = React.lazy(() => import("./Pages/admin/dashboard"));
-const PresentAbsent = React.lazy(()=>import('./Pages/admin/components/employee-present-absent-details'))
+const PresentAbsent = React.lazy(() =>
+  import("./Pages/admin/components/employee-present-absent-details")
+);
 const Employees = React.lazy(() => import("./Pages/admin/employees"));
 const Departments = React.lazy(() => import("./Pages/admin/departments"));
 const Designation = React.lazy(() => import("./Pages/admin/designation"));
+const Invoice = React.lazy(() => import("./Pages/admin/invoice"));
 const Policies = React.lazy(() => import("./Pages/admin/policies"));
 const Holiday = React.lazy(() => import("./Pages/admin/holiday"));
 const Announcement = React.lazy(() => import("./Pages/admin/announcement"));
@@ -40,73 +42,81 @@ const Dashboardemployee = React.lazy(() => import("./Pages/users/dashboard"));
 const Attendanceemployee = React.lazy(() => import("./Pages/users/attendance"));
 const LeaveRequestemployee = React.lazy(() => import("./Pages/users/leave"));
 const Financeemployee = React.lazy(() => import("./Pages/users/salary"));
-const Announcementemployee = React.lazy(() => import("./Pages/users/announcement"));
+const Announcementemployee = React.lazy(() =>
+  import("./Pages/users/announcement")
+);
 const Policiyemployee = React.lazy(() => import("./Pages/users/policies"));
 const Holidayemployee = React.lazy(() => import("./Pages/users/holiday"));
 const Profileemployee = React.lazy(() => import("./Pages/profile"));
-
 
 const notify = (x, iserror = false) =>
   iserror
     ? toast.error(x, { theme: "colored" })
     : toast.success(x, { theme: "colored" });
 
-// Socket connection 
-  
-  const socket = io(env.BASE_URL)
+// Socket connection
+
+const socket = io(env.BASE_URL);
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [announcement_New_notice, setAnnouncement_New_notice] = useState(false)
-  const [totalAnnoun, setTotalAnnoun] = useState()
-  const [policy_New_notice, setPolicy_New_notice] = useState(false)
-  const [totalPolicy, setTotalPlicy] = useState()
-  const [leave_new_notice, setLeave_new_notice] = useState(false)
-  const [totalLeave, setTotalLeave] = useState()
+  const [announcement_New_notice, setAnnouncement_New_notice] = useState(false);
+  const [totalAnnoun, setTotalAnnoun] = useState();
+  const [policy_New_notice, setPolicy_New_notice] = useState(false);
+  const [totalPolicy, setTotalPlicy] = useState();
+  const [leave_new_notice, setLeave_new_notice] = useState(false);
+  const [totalLeave, setTotalLeave] = useState();
 
   useEffect(() => {
     dispatch(isLogin());
   }, [dispatch]);
   const data = useSelector((status) => status.auth);
 
-
-
   return (
     <>
       {data.isAuthenticated ? (
-        <Header notify={notify} current_user={data.current_user} jwt={data.jwt}/>
+        <Header
+          notify={notify}
+          current_user={data.current_user}
+          jwt={data.jwt}
+        />
       ) : (
         <></>
       )}
 
       <div className="row gx-0">
-        {data.isAuthenticated ?(
+        {data.isAuthenticated ? (
           <>
             <div className="col-xl-2 col-lg-3 col-md-4 col-12">
-              <Sidebar 
-                socket= {socket}
-                totalAnnoun={totalAnnoun} 
-                totalPolicy={totalPolicy} 
-                totalLeave = {totalLeave}
+              <Sidebar
+                socket={socket}
+                totalAnnoun={totalAnnoun}
+                totalPolicy={totalPolicy}
+                totalLeave={totalLeave}
                 setAnnouncement_New_notice={setAnnouncement_New_notice}
-                setPolicy_New_notice ={setPolicy_New_notice}
-                setLeave_new_notice = {setLeave_new_notice}
-                policy_New_notice={policy_New_notice} 
-                announcement_New_notice={announcement_New_notice} 
-                leave_new_notice = {leave_new_notice}
-                current_user={data.current_user} />
+                setPolicy_New_notice={setPolicy_New_notice}
+                setLeave_new_notice={setLeave_new_notice}
+                policy_New_notice={policy_New_notice}
+                announcement_New_notice={announcement_New_notice}
+                leave_new_notice={leave_new_notice}
+                current_user={data.current_user}
+              />
             </div>
             <div className="col-xl-10 col-lg-9 col-md-8 col-12">
               <Suspense fallback={<Loader />}>
                 {data.current_user.is_admin ? (
                   <Routes>
-                    <Route 
-                      path="/" element={ <Dashboard jwt={data.jwt}
-                      setLeave_new_notice = {setLeave_new_notice}
-                      setTotalLeave = {setTotalLeave}
-                      socket = {socket}
-                      current_user={data.current_user} />
+                    <Route
+                      path="/"
+                      element={
+                        <Dashboard
+                          jwt={data.jwt}
+                          setLeave_new_notice={setLeave_new_notice}
+                          setTotalLeave={setTotalLeave}
+                          socket={socket}
+                          current_user={data.current_user}
+                        />
                       }
                     />
                     <Route
@@ -115,12 +125,15 @@ function App() {
                     />
                     <Route
                       path="/departments"
-                      element={<Departments jwt={data.jwt} notify={notify}  />}
+                      element={<Departments jwt={data.jwt} notify={notify} />}
                     />{" "}
-                    jwt = {data.jwt}
                     <Route
                       path="/designation"
                       element={<Designation jwt={data.jwt} notify={notify} />}
+                    />
+                    <Route
+                      path="/invoice"
+                      element={<Invoice jwt={data.jwt} notify={notify} />}
                     />
                     <Route
                       path="/policies"
@@ -152,7 +165,9 @@ function App() {
                     >
                       <Route
                         path=":id"
-                        element={<LeaveDetails jwt={data.jwt} notify={notify} />}
+                        element={
+                          <LeaveDetails jwt={data.jwt} notify={notify} />
+                        }
                       />
                     </Route>
                     <Route
@@ -165,7 +180,9 @@ function App() {
                     />
                     <Route
                       path="/profile"
-                      element={<Profileemployee jwt={data.jwt} notify={notify} />}
+                      element={
+                        <Profileemployee jwt={data.jwt} notify={notify} />
+                      }
                     />
                     <Route
                       path="/absent_present"
@@ -182,9 +199,11 @@ function App() {
                       path="/"
                       element={
                         <Dashboardemployee
-                          socket= {socket}
-                          setAnnouncement_New_notice= {setAnnouncement_New_notice}
-                          setPolicy_New_notice ={setPolicy_New_notice}
+                          socket={socket}
+                          setAnnouncement_New_notice={
+                            setAnnouncement_New_notice
+                          }
+                          setPolicy_New_notice={setPolicy_New_notice}
                           setTotalAnnoun={setTotalAnnoun}
                           setTotalPlicy={setTotalPlicy}
                           jwt={data.jwt}
@@ -202,13 +221,14 @@ function App() {
                       element={
                         <LeaveRequestemployee
                           jwt={data.jwt}
-                          current_user={data.current_user} notify={notify}
+                          current_user={data.current_user}
+                          notify={notify}
                         />
                       }
                     />
                     <Route
                       path="/salary"
-                      element={<Financeemployee jwt={data.jwt}/>}
+                      element={<Financeemployee jwt={data.jwt} />}
                     />
                     <Route
                       path="/announcement"
@@ -220,14 +240,13 @@ function App() {
                     />
                     <Route
                       path="/holiday"
-                      element={<Holidayemployee jwt={data.jwt}/>}
+                      element={<Holidayemployee jwt={data.jwt} />}
                     />
                     <Route
                       path="/profile"
                       element={<Profileemployee jwt={data.jwt} />}
                     />
                   </Routes>
-                  
                 )}
               </Suspense>
             </div>
@@ -243,6 +262,7 @@ function App() {
                 </Routes>
               </Suspense>
             </div>
+            
           </>
         )}
       </div>

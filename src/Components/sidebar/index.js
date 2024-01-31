@@ -18,8 +18,9 @@ import {
   MdOutlineHolidayVillage,
   MdOutlineNetworkWifi
 } from "react-icons/md";
-import { GoClippy } from "react-icons/go";
+import { GoPin } from "react-icons/go";
 import { FcLeave } from "react-icons/fc";
+import { FaFileInvoice } from "react-icons/fa";
 import "./index.css";
 
 function Sidebar(props) {
@@ -102,6 +103,15 @@ function Sidebar(props) {
                   <span className="ms-2">Designation</span>
                 </li>
               </Link>
+              <Link to="/invoice">
+                <li
+                  className={isActive === "/invoice" ? "active" : ""}
+                  onClick={() => setIsActive("/invoice")}
+                >
+                  <FaFileInvoice />
+                  <span className="ms-2">Invoice</span>
+                </li>
+              </Link>
               <Link to="/policies">
                 <li
                   className={isActive === "/policies" ? "active" : ""}
@@ -161,7 +171,7 @@ function Sidebar(props) {
                   className={isActive === "/leave-request" ? "active" : ""}
                   onClick={clickOnleave}
                 >
-                  <GoClippy />
+                  <GoPin />
                   <span className="ms-2">Leave Request</span>
                   {props.leave_new_notice && <span className="counter-box">{props.totalLeave}</span>}
                 </li>
@@ -219,7 +229,7 @@ function Sidebar(props) {
                   className={isActive === "/leave" ? "active" : ""}
                   onClick={() => setIsActive("/leave")}
                 >
-                  <GoClippy />
+                  <GoPin />
                   <span className="ms-2">Leave</span>
                 </li>
               </Link>

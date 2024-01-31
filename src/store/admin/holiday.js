@@ -392,5 +392,5 @@ const holidaySlice = createSlice({
 })
 
 export {getAll, addRecord, deleteRecord, updateRecord, serchingData };
-export const { getOne, unsetSingleData } = holidaySlice.actions 
+export const { getOne, unsetSingleData } = holidaySlice.actions;
 export default holidaySlice.reducer;
